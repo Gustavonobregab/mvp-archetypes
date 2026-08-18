@@ -1,0 +1,129 @@
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+@plugin "tailwindcss-animate";
+
+/* Tailwind v4 resolves sources relative to this file. The kernel lives outside
+   the apps, so both trees have to be declared or every class used in an app is
+   dropped from the build. */
+@source './';
+@source '../../../apps';
+
+/* shadcn components ship dark: classes. The kernel is light-only, so scope the
+   dark variant to a `.dark` ancestor that is never set. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── Base design tokens ─────────────────────────────────────────────────── */
+@theme {
+  --color-background:           #f9fafb;
+  --color-canvas:               #f3f4f6;
+  --color-foreground:           #111827;
+  --color-card:                 #ffffff;
+  --color-card-foreground:      #111827;
+  --color-popover:              #ffffff;
+  --color-popover-foreground:   #111827;
+
+  --color-primary:              #3b82f6;
+  --color-primary-foreground:   #ffffff;
+  --color-ring:                 #3b82f6;
+  --color-navy:                 #1d4ed8;
+
+  --color-secondary:            #f3f4f6;
+  --color-secondary-foreground: #374151;
+  --color-muted:                #f3f4f6;
+  --color-muted-foreground:     #6b7280;
+  --color-subtle:               #9ca3af;
+  --color-accent:               #f3f4f6;
+  --color-accent-foreground:    #111827;
+  --color-border:               #e5e7eb;
+  --color-input:                #d1d5db;
+
+  --color-sidebar:                    #f9fafb;
+  --color-sidebar-foreground:         #111827;
+  --color-sidebar-primary:            #3b82f6;
+  --color-sidebar-primary-foreground: #ffffff;
+  --color-sidebar-accent:             #eceef1;
+  --color-sidebar-accent-foreground:  #111827;
+  --color-sidebar-border:             #e5e7eb;
+  --color-sidebar-ring:               #3b82f6;
+
+  --color-chart-1:              #2563eb;
+  --color-chart-2:              #60a5fa;
+  --color-chart-3:              #93c5fd;
+
+  --color-destructive:          #dc2626;
+  --color-destructive-soft:     #fee2e2;
+  --color-success:              #166534;
+  --color-success-soft:         #d6f0dc;
+  --color-warning:              #92400e;
+  --color-warning-soft:         #fcedd2;
+  --color-info:                 #1e40af;
+  --color-info-soft:            #e2e9f9;
+
+  --radius: 0.375rem;
+  --radius-sm: calc(var(--radius) * 0.75);
+  --radius-md: calc(var(--radius) * 0.875);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+}
+
+/* ─── Per-role accent ────────────────────────────────────────────────────────
+   Where the production app keys the accent off department, the kernel keys it
+   off role. `AppShell` stamps `data-role` on `.app-root`, so every class that
+   references `primary` follows the active persona with no JS. Reskin edits the
+   values here and nothing else. */
+[data-role="manager"] {
+  --color-primary:            #0284c7;
+  --color-primary-foreground: #ffffff;
+  --color-ring:               #0284c7;
+  --color-navy:               #075985;
+  --color-sidebar-primary:    #0284c7;
+  --color-sidebar-ring:       #0284c7;
+}
+
+[data-role="technician"] {
+  --color-primary:            #1e40af;
+  --color-primary-foreground: #ffffff;
+  --color-ring:               #1e40af;
+  --color-navy:               #172554;
+  --color-sidebar-primary:    #1e40af;
+  --color-sidebar-ring:       #1e40af;
+}
+
+/* The role switcher renders every persona at once, so it cannot read
+   --color-primary (that is the active one). These mirror the blocks above and
+   are the only place a role color is written literally. Dot only, never a
+   filled surface. */
+.app-root {
+  --role-color-admin:      #3b82f6;
+  --role-color-manager:    #0284c7;
+  --role-color-technician: #1e40af;
+}
+
+/* ─── App base styles ────────────────────────────────────────────────────── */
+@layer base {
+  .app-root,
+  .app-root *,
+  .app-root *::before,
+  .app-root *::after {
+    box-sizing: border-box;
+    border-color: var(--color-border);
+  }
+  .app-root {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-geist-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .app-root :where(h1, h2, h3, h4, p, figure, ul, ol) { margin: 0; padding: 0; }
+  .app-root :where(table) { border-collapse: collapse; border-spacing: 0; }
+  .app-root :where(ul, ol) { list-style: none; }
+  .app-root :where(button) { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  .app-root :where(a) { color: inherit; text-decoration: none; }
+  .app-root :where(input, textarea, select) { font: inherit; color: inherit; }
+  .app-root .nv-num {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-feature-settings: 'tnum';
+  }
+}

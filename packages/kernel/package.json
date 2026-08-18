@@ -1,0 +1,14 @@
+{
+  "name": "@mvp/kernel",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./ui/*": "./src/ui/*.tsx",
+    "./lib/*": "./src/lib/*.ts",
+    "./hooks/*": "./src/hooks/*.ts",
+    "./dashboard": "./src/dashboard/index.ts",
+    "./demo/*": "./src/demo/*",
+    "./theme.css": "./src/theme.css"
+  }
+}

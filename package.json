@@ -1,0 +1,5 @@
+{
+  "name": "mvp-archetypes",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"]
+}
