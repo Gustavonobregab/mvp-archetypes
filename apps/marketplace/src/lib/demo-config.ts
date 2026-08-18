@@ -11,10 +11,12 @@ export const DEMO: DemoConfig = {
     renter: [
       { href: '/browse', label: 'Browse', icon: 'Search' },
       { href: '/my-bookings', label: 'My bookings', icon: 'CalendarCheck' },
+      { href: '/profile', label: 'Profile', icon: 'UserCircle' },
     ],
     provider: [
       { href: '/my-listings', label: 'My listings', icon: 'Package' },
       { href: '/requests', label: 'Requests', icon: 'Inbox' },
+      { href: '/profile', label: 'Profile', icon: 'UserCircle' },
     ],
   },
 };

@@ -13,8 +13,15 @@ export const DEMO: DemoConfig = {
       { href: '/jobs', label: 'Jobs', icon: 'Hammer' },
       { href: '/team', label: 'Team', icon: 'Users' },
       { href: '/billing', label: 'Billing', icon: 'CreditCard' },
+      { href: '/profile', label: 'Profile', icon: 'UserCircle' },
     ],
-    member: [{ href: '/jobs', label: 'My jobs', icon: 'Hammer' }],
-    platform: [{ href: '/accounts', label: 'Accounts', icon: 'Building2' }],
+    member: [
+      { href: '/jobs', label: 'My jobs', icon: 'Hammer' },
+      { href: '/profile', label: 'Profile', icon: 'UserCircle' },
+    ],
+    platform: [
+      { href: '/accounts', label: 'Accounts', icon: 'Building2' },
+      { href: '/profile', label: 'Profile', icon: 'UserCircle' },
+    ],
   },
 };

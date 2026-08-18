@@ -22,7 +22,15 @@ function Count({ n, tone }: { n: number; tone: string }) {
   return <Badge variant="secondary" className={`border-0 font-medium ${tone}`}>{n}</Badge>;
 }
 
-export function PeopleTable({ rows, showSite }: { rows: PersonRow[]; showSite: boolean }) {
+export function PeopleTable({
+  rows,
+  showSite,
+  onRowClick,
+}: {
+  rows: PersonRow[];
+  showSite: boolean;
+  onRowClick: (row: PersonRow) => void;
+}) {
   const columns = React.useMemo<ColumnDef<PersonRow, unknown>[]>(() => {
     const cols: ColumnDef<PersonRow, unknown>[] = [
       {
@@ -77,6 +85,7 @@ export function PeopleTable({ rows, showSite }: { rows: PersonRow[]; showSite: b
       pageSize={12}
       searchPlaceholder="Search engineer"
       getRowId={(row) => row.id}
+      onRowClick={onRowClick}
     />
   );
 }

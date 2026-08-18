@@ -1,15 +1,15 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { PEOPLE, SITE_BY_ID, SITE_OF_MANAGER, registerForRole, type RoleKey } from '@/lib/domain';
-import { ROLE_COOKIE } from '@mvp/kernel/demo/role-cookie';
 import { canAccess } from '@mvp/kernel/demo/types';
+import { ROLE_COOKIE } from '@mvp/kernel/demo/role-cookie';
 import { DEMO } from '@/lib/demo-config';
-import { DashboardHeader } from '@mvp/kernel/dashboard';
-import { PeopleTable } from '@/features/register/PeopleTable';
+import { PEOPLE, SITE_BY_ID, SITE_OF_MANAGER, registerForRole, type RoleKey } from '@/lib/domain';
+import { PeopleView } from '@/features/register/PeopleView';
 
 export default async function PeoplePage() {
   const role = ((await cookies()).get(ROLE_COOKIE)?.value ?? 'admin') as RoleKey;
   if (!canAccess(DEMO, role, '/people')) redirect('/my-record');
+
   const rows = registerForRole(role);
   const scoped = role === 'manager' ? PEOPLE.filter((p) => p.siteId === SITE_OF_MANAGER) : PEOPLE;
 
@@ -30,12 +30,11 @@ export default async function PeoplePage() {
   });
 
   return (
-    <div className="flex flex-col gap-4">
-      <DashboardHeader
-        title={role === 'manager' ? 'My team' : 'People'}
-        description="Engineers on the register and where each one stands."
-      />
-      <PeopleTable rows={people} showSite={role === 'admin'} />
-    </div>
+    <PeopleView
+      people={people}
+      rows={rows}
+      showSite={role === 'admin'}
+      title={role === 'manager' ? 'My team' : 'People'}
+    />
   );
 }

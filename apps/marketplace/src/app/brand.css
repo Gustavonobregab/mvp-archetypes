@@ -1,0 +1,13 @@
+@import '@mvp/kernel/theme.css';
+
+/* Client brand. This is the ONLY file a reskin edits for colour, and it is the
+   only file in an app allowed to contain a hex literal. It is imported after the
+   kernel theme, so on equal specificity these win. */
+.app-root {
+  --color-primary: #c2410c;
+  --color-primary-foreground: #ffffff;
+  --color-ring: #c2410c;
+  --color-navy: #7c2d12;
+  --color-sidebar-primary: #c2410c;
+  --color-sidebar-ring: #c2410c;
+}
