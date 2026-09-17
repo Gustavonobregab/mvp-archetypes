@@ -56,9 +56,8 @@ density baked into the primitives.
 `AppShell` stamps `data-role` on `.app-root`, and each role block overrides `--color-primary`.
 Any class referencing `primary` follows the active persona with no JS.
 
-**Known gap:** there is no per-app override, so a client brand colour cannot be applied without
-editing this shared file and contaminating the other archetypes. Needs fixing before the builder
-is automated.
+A client brand colour never goes here. Each app imports its own `src/app/brand.css` after this
+file, and that override is the only place a reskin sets colour.
 
 ## Local changes to the copied primitives
 

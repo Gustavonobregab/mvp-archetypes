@@ -1,10 +1,10 @@
 # mvp-archetypes
 
-Prototype templates that get forked and reskinned per Upwork client. This is the **machine**,
-not a product. It stays private forever.
+Prototype templates that get reskinned per Upwork client and deployed as a standalone demo. This
+is the **machine**, not a product. It stays private forever and has no git remote.
 
-The other half of the system is `~/Programming/mvp-funnel`, the radar that detects the job and
-pushes a decision card to Telegram. Read that repo's `CLAUDE.md` for the thesis and the flow.
+Someone else finds the jobs and sends the proposals. This repo only turns a pasted job into a live
+demo link. Design: `docs/superpowers/specs/2026-09-17-demo-flow-vercel-design.md`.
 
 ## The one idea that makes this work
 
@@ -60,7 +60,7 @@ bun install                                   # workspace root
 cd apps/console && bun run dev                # 3500
 cd apps/saas && bun run dev                   # 3501
 cd apps/marketplace && bun run dev            # 3502
-bunx tsc --noEmit                             # per app, must stay clean
+bun run typecheck                             # all three apps, must stay clean
 ```
 
 ## Tailwind gotcha, this already broke once
@@ -91,14 +91,33 @@ gaps and real overdue items reads as **their** operation.
 Every archetype's seed is deliberately uneven: some records healthy, several with one lapse, a
 few missing entirely. The gaps are the reason the product exists, so they must be visible.
 
+## How a demo is born
+
+The `demo` skill (`~/.claude/skills/demo/SKILL.md`) runs this. In short:
+
+```bash
+git worktree add ~/Programming/demos/<slug> -b demo/<slug>    # from main
+cd ~/Programming/demos/<slug> && bun install
+# one agent per job rewrites the archetype under RESKIN.md
+(cd apps/<archetype> && bun run typecheck && bun run build)
+scripts/deploy-demo.sh <console|saas|marketplace> <slug>
+```
+
+`scripts/deploy-demo.sh` creates or reuses the Vercel project `demo-<slug>` in
+`gustavo-nobregas-projects`, deploys with `deploy/vercel.<archetype>.json` and prints the public
+URL on its last line after checking it answers 200. Rerunning it redeploys the same project.
+
+The worktree root is uploaded whole and Vercel installs the Bun workspace there, so the kernel
+resolves as it does locally. The per-archetype config only picks which app gets built.
+
+`next-env.d.ts` is generated, not versioned. `next dev` and `next build` rewrite it with different
+paths, so each app's `typecheck` script runs `next typegen` first.
+
 ## State
 
-Three archetypes run with working CRUD, modals, destructive confirmation, toasts and role
-isolation. **Nothing is deployed**, so there is no link to send a client yet. That is delivery 3
-in the funnel repo's spec.
+Three archetypes with working CRUD, modals, destructive confirmation, toasts, role isolation,
+per-app brand colour through `src/app/brand.css`, and detail drawers. Typecheck and build are
+clean on all three.
 
-Known gaps, both real:
-
-- **No per-app theme override.** A client's brand colour would have to be edited into the kernel
-  today, which would contaminate the other two archetypes. Needs an override file per app.
-- Console's People page has no detail drawer.
+Deploy works end to end: `demo-smoke-saas` (the SaaS base, unchanged) is live at
+`https://demo-smoke-saas.vercel.app` from the `~/Programming/demos/smoke-saas` worktree.

@@ -15,7 +15,7 @@ generating an app. You are **rewriting its domain and its copy**, on a base that
 
 | Layer | Files | Time |
 |---|---|---|
-| **L1 Copy and brand** | `src/lib/demo-config.ts` | 2 min |
+| **L1 Copy and brand** | `src/lib/demo-config.ts`, `src/app/brand.css` | 2 min |
 | **L2 Domain schema** | `src/lib/domain.ts` types and entities | 5 min |
 | **L3 Seed data** | `src/lib/domain.ts` constants | 5 min |
 | **L4 Specific flow** | 1 to 3 files under `src/features/` | 10 min |
@@ -77,16 +77,25 @@ account and closes the tab. Cards only.
 
 ## Branch and naming
 
-One branch per demo: `demo/<client-slug>`. The branch records the exact kernel state that built
-that demo. **A deployed demo is immutable**: it is never rebuilt. A later kernel change reaches
-new demos only, so a demo attached to a live proposal can never break.
+One worktree and one branch per demo: `~/Programming/demos/<client-slug>` on
+`demo/<client-slug>`. The branch records the exact kernel state that built that demo. **A deployed
+demo is immutable**: a later kernel change reaches new demos only, so a demo attached to a live
+proposal never breaks.
 
-Eject to a standalone repo only when the contract is won, or when a technical client will
-clearly read the code. That is roughly one demo in ten, so it is not on the critical path.
+Deploy from inside the worktree:
+
+```bash
+scripts/deploy-demo.sh <console|saas|marketplace> <client-slug>
+```
+
+It creates or reuses the Vercel project `demo-<client-slug>`, deploys the archetype to production
+and prints the public URL on its last line. Never push the branch anywhere.
+
+Eject to a standalone repo only when the contract is won.
 
 ## Definition of done
 
-- `bunx tsc --noEmit` clean
+- `bun run typecheck` and `bun run build` clean inside the demo's app
 - Every role opens, its nav matches its manifest, its slice differs from the others
 - Create, edit and delete work and persist in state
 - Destructive actions confirm before acting

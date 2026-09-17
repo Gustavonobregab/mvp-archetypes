@@ -38,7 +38,3 @@ Create, edit and delete a record with validation. Expiry auto-derives from the c
 validity period and stays overridable. Row actions on hover. Destructive confirmation with
 contextual text. Detail drawer. Profile page with contact details and notification switches.
 Toasts on every action.
-
-## Known gap
-
-People page has no detail drawer.
