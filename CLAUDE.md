@@ -1,7 +1,7 @@
 # mvp-archetypes
 
 Prototype templates that get reskinned per Upwork client and deployed as a standalone demo. This
-is the **machine**, not a product. It stays private forever. Only `main` is pushed; `demo/*`
+is the **machine**, not a product. The GitHub repo is public. Only `main` is pushed; `demo/*`
 branches never leave this machine.
 
 Someone else finds the jobs and sends the proposals. This repo only turns a pasted job into a live
