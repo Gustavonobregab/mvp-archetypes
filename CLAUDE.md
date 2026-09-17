@@ -1,7 +1,8 @@
 # mvp-archetypes
 
 Prototype templates that get reskinned per Upwork client and deployed as a standalone demo. This
-is the **machine**, not a product. It stays private forever and has no git remote.
+is the **machine**, not a product. It stays private forever. Only `main` is pushed; `demo/*`
+branches never leave this machine.
 
 Someone else finds the jobs and sends the proposals. This repo only turns a pasted job into a live
 demo link. Design: `docs/superpowers/specs/2026-09-17-demo-flow-vercel-design.md`.
