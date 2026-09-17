@@ -20,7 +20,8 @@ if ! vercel project inspect "$project" --scope "$scope" >/dev/null 2>&1; then
 fi
 vercel link --yes --project "$project" --scope "$scope" >&2
 
-deployment=$(vercel deploy --prod --yes --scope "$scope" -A "$config" | tail -1)
+deployment=$(vercel deploy --prod --yes --scope "$scope" -A "$config" --format json | jq -r '.deployment.url // empty')
+[ -n "$deployment" ] || { echo "deploy returned no url" >&2; exit 1; }
 alias=$(vercel inspect "$deployment" --scope "$scope" --format json | jq -r '.aliases | sort_by(length) | .[0] // empty')
 [ -n "$alias" ] || { echo "no production alias for $deployment" >&2; exit 1; }
 url="https://$alias"
